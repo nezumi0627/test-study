@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電気工学の基礎まとめ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 2rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+        .formula {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+        .formula:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: #3498db;
+            border-radius: 2px;
+        }
+        .formula p {
+            margin: 0;
+            padding: 0.5rem 0;
+        }
+        .formula ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .formula li {
+            padding: 0.2rem 0;
+        }
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #5bc0de;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .highlight {
+            background-color: #fffde7;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .example {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .term {
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: underline;
+            text-decoration-color: #3498db;
+            text-underline-offset: 4px;
+        }
+        .test-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+        }
+        .test-question {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .test-question:hover {
+            background-color: #f8f9fa;
+        }
+        .test-answer {
+            display: none;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .test-controls {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .test-btn {
+            flex: 1;
+        }
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        .test-stats {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        .hidden-term {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            color: transparent;
+            padding: 0 4px;
+            margin: 0 2px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            border-bottom: 1px dashed #999;
+        }
+        .hidden-term::after {
+            content: "?";
+            color: #666;
+            font-size: 0.9em;
+            vertical-align: super;
+            margin-left: 2px;
+        }
+        .hidden-term.revealed {
+            background-color: #e6f7ff;
+            color: inherit;
+            border-bottom: 1px solid #91d5ff;
+        }
+        .hidden-term.revealed::after {
+            content: "✓";
+            color: #52c41a;
+        }
+        .term-controls {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .term-controls button {
+            font-size: 0.9em;
+            padding: 5px 10px;
+        }
+        .term-count {
+            margin-left: auto;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>電気工学の基礎まとめ</h1>
+        
+        <!-- 用語コントロール -->
+        <div class="term-controls">
+            <button id="hideAllTerms" class="btn btn-sm btn-outline-secondary">すべての用語を隠す</button>
+            <button id="showAllTerms" class="btn btn-sm btn-outline-primary">すべての用語を表示</button>
+            <span id="termCount" class="ms-2"></span>
+        </div>
+
+        <div class="text-end mb-4">
+            <button id="startTest" class="btn btn-primary">テストを開始する</button>
+        </div>
+
+        <section id="free-electron">
+            <h2>自由電子</h2>
+            <div class="content">
+                <p><span class="term">自由電子</span>とは、物質内を自由に動き回る電子のことを指します。</p>
+            </div>
+        </section>
+
+        <section id="charge-friction">
+            <h2>電荷と摩擦</h2>
+            <div class="content">
+                <p>物体を摩擦すると、電子が移動して電気を生じることがあります。これを<span class="term">電荷</span>といいます。</p>
+            </div>
+        </section>
+
+        <section id="current">
+            <h2>電流とアンペア</h2>
+            <div class="content">
+                <p>電流の大きさは、1秒間に通過する電荷の量で表され、その単位に<span class="term">アンペア (A)</span> を用います。</p>
+                
+                <div class="formula">
+                    <p>電流の大きさを表す式：</p>
+                    \[ I = \frac{Q}{t} \]
+                    <div class="mt-2">
+                        <ul>
+                            <li>\( I \)：電流 [A]（アンペア）</li>
+                            <li>\( Q \)：電荷 [C]（クーロン）</li>
+                            <li>\( t \)：時間 [s]（秒）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resistance">
+            <h2>電気抵抗とオームの法則</h2>
+            <div class="content">
+                <p>電流の流れを妨げるものを<span class="term">電気抵抗</span>（単に抵抗）と呼び、その単位には<span class="term">オーム (Ω)</span> を用います。</p>
+                
+                <div class="note">
+                    <p>抵抗の性質：</p>
+                    <ul>
+                        <li>回路に流れる電流 \( I \) [A] は、電圧 \( V \) [V] に比例します</li>
+                        <li>電流 \( I \) [A] は、抵抗 \( R \) [Ω] に反比例します</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    <p>オームの法則：</p>
+                    \[ I = \frac{V}{R} \]
+                    <div class="mt-2">
+                        <ul>
+                            <li>\( I \)：電流 [A]</li>
+                            <li>\( V \)：電圧 [V]（ボルト）</li>
+                            <li>\( R \)：抵抗 [Ω]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="bridge">
+            <h2>ブリッジの平衡条件</h2>
+            <div class="content">
+                <p>ブリッジ回路が平衡状態のとき、以下の関係が成り立ちます：</p>
+                <div class="formula">
+                    \[ R_1 R_4 = R_2 R_3 \]
+                </div>
+                <div class="note">
+                    <p>この条件が満たされると、ブリッジ回路の中央を流れる電流は0になります。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="kirchhoff">
+            <h2>キルヒホッフの法則</h2>
+            <div class="content">
+                <h4>キルヒホッフの第1法則（電流則）</h4>
+                <p>回路の任意の接続点（節点）において：</p>
+                <div class="formula">
+                    <p>$$I_1 + I_2 + I_3 = I_4 + I_5$$</p>
+                    <ul>
+                        <li>左辺：接続点に流入する電流の和</li>
+                        <li>右辺：接続点から流出する電流の和</li>
+                    </ul>
+                </div>
+                <p>この法則は、電荷の保存則から導かれます。</p>
+            </div>
+        </section>
+
+        <section id="temperature-resistance">
+            <h2>抵抗と温度の関係</h2>
+            <div class="content">
+                <p>抵抗の大きさは材質だけでなく、温度によっても変化します：</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-primary text-white">
+                                金属の抵抗
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">温度が上昇すると、金属の抵抗は<strong>増加</strong>します。</p>
+                                <p class="card-text">（例：銅、アルミニウムなど）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-success text-white">
+                                半導体の抵抗
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">温度が上昇すると、半導体の抵抗は<strong>減少</strong>します。</p>
+                                <p class="card-text">（例：シリコン、ゲルマニウムなど）</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- テスト用コンテナ -->
+        <div id="testContainer" class="test-container" style="display: none;">
+            <h3>テストモード</h3>
+            <div id="testQuestions"></div>
+            <div class="test-controls">
+                <button id="checkAnswers" class="btn btn-success test-btn">解答を確認する</button>
+                <button id="resetTest" class="btn btn-outline-secondary test-btn">リセット</button>
+            </div>
+            <div id="testResult" class="test-result"></div>
+        </div>
+
+        <footer class="mt-5 pt-3 text-muted text-center">
+            <p>電気工学の基礎まとめ &copy; 2025</p>
+        </footer>
+    </div>
+
+    <!-- 結果モーダル -->
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">テスト結果</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="resultStats" class="mb-3"></div>
+                    <div id="incorrectAnswers" class="mb-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="reviewIncorrect" class="btn btn-warning">間違えた問題を復習</button>
+                    <button id="restartTest" class="btn btn-primary">もう一度テストする</button>
+                    <button id="backToTop" class="btn btn-secondary" data-bs-dismiss="modal">トップに戻る</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- テスト用スクリプト -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // テスト問題の定義
+            const questions = [
+                {
+                    question: '物質内を自由に動き回る電子を何というか？',
+                    answer: '自由電子'
+                },
+                {
+                    question: '物体を摩擦することで生じる電気を何というか？',
+                    answer: '電荷'
+                },
+                {
+                    question: '電流の単位は？',
+                    answer: 'アンペア (A)'
+                },
+                {
+                    question: 'オームの法則の式はなにか',
+                    answer: 'I = V/R'
+                },
+                {
+                    question: 'ブリッジ回路が平衡状態の時の関係式は？',
+                    answer: 'R₁R₄ = R₂R₃'
+                }
+            ];
+
+            let currentQuestions = [];
+            let testResults = [];
+            let resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
+
+            // テスト開始
+            document.getElementById('startTest').addEventListener('click', startTest);
+            
+            // 解答表示/非表示
+            document.getElementById('testQuestions').addEventListener('click', function(e) {
+                if (e.target.classList.contains('test-question')) {
+                    const answer = e.target.nextElementSibling;
+                    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+
+            // 解答チェック
+            document.getElementById('checkAnswers').addEventListener('click', checkAnswers);
+            
+            // テストリセット
+            document.getElementById('resetTest').addEventListener('click', resetTest);
+            
+            // 間違えた問題を復習
+            document.getElementById('reviewIncorrect').addEventListener('click', reviewIncorrect);
+            
+            // テストを再開
+            document.getElementById('restartTest').addEventListener('click', function() {
+                resultModal.hide();
+                startTest();
+            });
+            
+            // トップに戻る
+            document.getElementById('backToTop').addEventListener('click', function() {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+
+            function startTest() {
+                // テストコンテナを表示
+                document.getElementById('testContainer').style.display = 'block';
+                document.getElementById('testContainer').scrollIntoView({behavior: 'smooth'});
+                
+                // 問題をシャッフル
+                currentQuestions = [...questions].sort(() => Math.random() - 0.5);
+                
+                // 問題を表示
+                const questionsContainer = document.getElementById('testQuestions');
+                questionsContainer.innerHTML = '';
+                
+                currentQuestions.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'mb-3';
+                    questionDiv.innerHTML = `
+                        <div class="test-question">問題 ${index + 1}: ${q.question}</div>
+                        <div class="test-answer">
+                            <div>答え: ${q.answer}</div>
+                            <div class="test-controls mt-2">
+                                <button class="btn btn-sm btn-outline-success me-2 correct-btn">⭕️ 正解</button>
+                                <button class="btn btn-sm btn-outline-danger incorrect-btn">❌ 不正解</button>
+                            </div>
+                        </div>
+                    `;
+                    questionsContainer.appendChild(questionDiv);
+                });
+                
+                // 結果をリセット
+                testResults = [];
+                document.getElementById('testResult').style.display = 'none';
+            }
+            
+            function checkAnswers() {
+                const answers = document.querySelectorAll('.test-answer');
+                let allAnswered = true;
+                
+                answers.forEach(answer => {
+                    if (answer.style.display !== 'block') {
+                        allAnswered = false;
+                    }
+                });
+                
+                if (!allAnswered) {
+                    alert('すべての問題に回答してください。');
+                    return;
+                }
+                
+                // 結果を収集
+                const results = [];
+                document.querySelectorAll('.test-answer').forEach((answer, index) => {
+                    const isCorrect = answer.querySelector('.correct-btn').classList.contains('active');
+                    results.push({
+                        question: currentQuestions[index].question,
+                        answer: currentQuestions[index].answer,
+                        isCorrect: isCorrect
+                    });
+                });
+                
+                testResults = results;
+                showResults();
+            }
+            
+            function showResults() {
+                const correctCount = testResults.filter(r => r.isCorrect).length;
+                const total = testResults.length;
+                const score = Math.round((correctCount / total) * 100);
+                
+                // 結果を表示
+                const resultStats = document.getElementById('resultStats');
+                resultStats.innerHTML = `
+                    <div class="alert ${score >= 70 ? 'alert-success' : 'alert-warning'}">
+                        <h4>得点: ${score}点 (${correctCount}/${total}問正解)</h4>
+                    </div>
+                `;
+                
+                // 間違えた問題を表示
+                const incorrectAnswers = testResults.filter(r => !r.isCorrect);
+                const incorrectContainer = document.getElementById('incorrectAnswers');
+                
+                if (incorrectAnswers.length > 0) {
+                    let incorrectHtml = '<h5>間違えた問題:</h5><ul class="list-group">';
+                    incorrectAnswers.forEach(item => {
+                        incorrectHtml += `
+                            <li class="list-group-item">
+                                <strong>問題:</strong> ${item.question}<br>
+                                <strong>正解:</strong> ${item.answer}
+                            </li>
+                        `;
+                    });
+                    incorrectHtml += '</ul>';
+                    incorrectContainer.innerHTML = incorrectHtml;
+                } else {
+                    incorrectContainer.innerHTML = '<div class="alert alert-success">全問正解です！おめでとうございます！</div>';
+                }
+                
+                // モーダルを表示
+                resultModal.show();
+            }
+            
+            function resetTest() {
+                if (confirm('テストをリセットしますか？')) {
+                    startTest();
+                }
+            }
+            
+            function reviewIncorrect() {
+                resultModal.hide();
+                // 間違えた問題だけを抽出
+                const incorrectQuestions = [];
+                testResults.forEach((result, index) => {
+                    if (!result.isCorrect) {
+                        incorrectQuestions.push(currentQuestions[index]);
+                    }
+                });
+                
+                if (incorrectQuestions.length === 0) {
+                    alert('間違えた問題はありません。');
+                    return;
+                }
+                
+                // 間違えた問題だけで新しいテストを開始
+                currentQuestions = incorrectQuestions;
+                const questionsContainer = document.getElementById('testQuestions');
+                questionsContainer.innerHTML = '';
+                
+                currentQuestions.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'mb-3';
+                    questionDiv.innerHTML = `
+                        <div class="test-question">問題 ${index + 1}: ${q.question}</div>
+                        <div class="test-answer">
+                            <div>答え: ${q.answer}</div>
+                            <div class="test-controls mt-2">
+                                <button class="btn btn-sm btn-outline-success me-2 correct-btn">⭕️ 正解</button>
+                                <button class="btn btn-sm btn-outline-danger incorrect-btn">❌ 不正解</button>
+                            </div>
+                        </div>
+                    `;
+                    questionsContainer.appendChild(questionDiv);
+                });
+                
+                // 結果をリセット
+                testResults = [];
+                document.getElementById('testResult').style.display = 'none';
+            }
+            
+            // 正解/不正解ボタンのイベント委譲
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('correct-btn') || e.target.classList.contains('incorrect-btn')) {
+                    // 他のボタンのアクティブ状態を解除
+                    const siblings = Array.from(e.target.parentNode.children);
+                    siblings.forEach(btn => {
+                        btn.classList.remove('active', 'btn-success', 'btn-danger');
+                        btn.classList.add('btn-outline-success', 'btn-outline-danger');
+                    });
+                    
+                    // クリックしたボタンをアクティブに
+                    e.target.classList.add('active');
+                    if (e.target.classList.contains('correct-btn')) {
+                        e.target.classList.remove('btn-outline-success');
+                        e.target.classList.add('btn-success');
+                    } else {
+                        e.target.classList.remove('btn-outline-danger');
+                        e.target.classList.add('btn-danger');
+                    }
+                }
+            });
+            
+            // 用語を隠す対象のクラス名
+            const TERM_CLASS = 'term';
+            let hiddenTerms = [];
+            
+            // 用語を隠す関数
+            function hideTerm(element) {
+                // 特定のテキストは隠さない
+                const text = element.textContent.trim();
+                if (text === '左辺：接続点に流入する電流の和' || 
+                    text === '右辺：接続点から流出する電流の和') {
+                    return null; // 隠さない
+                }
+                
+                if (element.classList.contains('hidden-term')) return null;
+                
+                const originalText = element.textContent;
+                const span = document.createElement('span');
+                span.className = 'hidden-term';
+                span.setAttribute('data-original-text', originalText);
+                span.textContent = '　　　'; // 全角スペースで幅を調整
+                
+                // クリックで表示/非表示を切り替え
+                span.addEventListener('click', function() {
+                    this.classList.toggle('revealed');
+                    if (this.classList.contains('revealed')) {
+                        this.textContent = originalText;
+                    } else {
+                        this.textContent = '　　　';
+                    }
+                    saveHiddenTerms();
+                });
+                
+                // 元の要素を置き換え
+                element.parentNode.replaceChild(span, element);
+                
+                return span;
+            }
+            
+            // すべての用語を隠す
+            function hideAllTerms() {
+                const terms = document.querySelectorAll(`.${TERM_CLASS}`);
+                hiddenTerms = [];
+                
+                terms.forEach(term => {
+                    const hiddenTerm = hideTerm(term);
+                    if (hiddenTerm) {
+                        hiddenTerms.push(hiddenTerm);
+                    }
+                });
+                
+                updateTermCount();
+                saveHiddenTerms();
+            }
+            
+            // すべての用語を表示
+            function showAllTerms() {
+                hiddenTerms.forEach(term => {
+                    if (term.parentNode) { // 要素がまだDOMに存在するか確認
+                        const originalText = term.getAttribute('data-original-text');
+                        const span = document.createElement('span');
+                        span.className = TERM_CLASS;
+                        span.textContent = originalText;
+                        term.parentNode.replaceChild(span, term);
+                    }
+                });
+                
+                hiddenTerms = [];
+                updateTermCount();
+                localStorage.removeItem('hiddenTerms');
+            }
+            
+            // 用語のカウントを更新
+            function updateTermCount() {
+                document.getElementById('termCount').textContent = hiddenTerms.length;
+            }
+            
+            // 隠した用語を保存
+            function saveHiddenTerms() {
+                const termsData = hiddenTerms.map(term => ({
+                    text: term.getAttribute('data-original-text'),
+                    isRevealed: term.classList.contains('revealed')
+                }));
+                localStorage.setItem('hiddenTerms', JSON.stringify(termsData));
+            }
+            
+            // 保存された用語を復元
+            function loadHiddenTerms() {
+                const savedTerms = localStorage.getItem('hiddenTerms');
+                if (savedTerms) {
+                    const termsData = JSON.parse(savedTerms);
+                    
+                    // 一度すべての用語を表示してから再度隠す
+                    showAllTerms();
+                    
+                    // 用語を探して隠す
+                    termsData.forEach(termData => {
+                        const terms = Array.from(document.querySelectorAll(`.${TERM_CLASS}`));
+                        const term = terms.find(t => t.textContent === termData.text);
+                        
+                        if (term) {
+                            const hiddenTerm = hideTerm(term);
+                            if (hiddenTerm && termData.isRevealed) {
+                                hiddenTerm.classList.add('revealed');
+                                hiddenTerm.textContent = termData.text;
+                            }
+                            hiddenTerms.push(hiddenTerm);
+                        }
+                    });
+                    
+                    updateTermCount();
+                }
+            }
+            
+            // イベントリスナーを設定
+            document.getElementById('hideAllTerms').addEventListener('click', hideAllTerms);
+            document.getElementById('showAllTerms').addEventListener('click', showAllTerms);
+            
+            // ページ読み込み時に保存された用語の状態を復元
+            loadHiddenTerms();
+            
+            // 定期的に用語の状態を保存
+            setInterval(saveHiddenTerms, 3000);
+        });
+    </script>
+</body>
+</html>
