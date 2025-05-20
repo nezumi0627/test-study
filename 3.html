@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ハードウェアとコンピュータの仕組み</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 2rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+        h3 {
+            color: #3498db;
+            margin-top: 1.5rem;
+        }
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #5bc0de;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .highlight {
+            background-color: #fffde7;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .term {
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: underline;
+            text-decoration-color: #3498db;
+            text-underline-offset: 4px;
+        }
+        .divider {
+            height: 2px;
+            background-color: #e0e0e0;
+            margin: 2rem 0;
+        }
+        .list-group {
+            margin: 1rem 0;
+        }
+        .list-group-item {
+            border-left: 3px solid #3498db;
+            margin-bottom: 0.5rem;
+            border-radius: 4px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ハードウェアとコンピュータの仕組み</h1>
+        
+        <section id="computer-types">
+            <h2>コンピュータの種類と構成</h2>
+            
+            <h3>ハードウェア</h3>
+            <ul class="list-group">
+                <li class="list-group-item">目に見える・触れられる部分</li>
+                <li class="list-group-item">例：コンピュータ本体、キーボード など</li>
+            </ul>
+
+            <h3>ソフトウェア</h3>
+            <ul class="list-group">
+                <li class="list-group-item">触れられない、プログラムに必要なデータ</li>
+            </ul>
+
+            <h3>プログラム</h3>
+            <ul class="list-group">
+                <li class="list-group-item">内部回路などの動作手順を記述したもの</li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="computer-functions">
+            <h2>コンピュータの機能と構造</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>入力装置</strong>：データをコンピュータに入力する</li>
+                <li class="list-group-item"><strong>記憶装置</strong>：プログラムやデータを一時保存（主記憶装置・補助記憶装置）</li>
+                <li class="list-group-item"><strong>制御装置</strong>：データの読み書きや各装置の制御</li>
+                <li class="list-group-item"><strong>演算装置</strong>：データの計算や比較処理</li>
+                <li class="list-group-item"><strong>出力装置</strong>：処理されたデータを表示する</li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="computer-configuration">
+            <h2>コンピュータ構成の分類</h2>
+            <div class="note">
+                <p><strong>主記憶装置 + 制御装置 + 演算装置</strong><br>
+                → <strong>処理装置</strong></p>
+            </div>
+            <div class="note">
+                <p><strong>制御装置 + 演算装置</strong><br>
+                → <strong>中央処理装置（CPU）</strong></p>
+            </div>
+            <div class="note">
+                <p><strong>補助記憶装置 + 入出力装置</strong><br>
+                → <strong>周辺処理装置</strong></p>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="bus">
+            <h2>バス</h2>
+            <p><strong>バス</strong>：部品や外部機器をつなぐ電気的な通路</p>
+            
+            <h3>種類</h3>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>内部バス</strong>：CPUとメモリ、メモリとポートなどを接続</li>
+                <li class="list-group-item"><strong>外部バス</strong>：コンピュータ本体と周辺機器（例：キーボード、マウス）を接続</li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="basic-terms">
+            <h2>その他の基本用語</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>インターフェース</strong>：入出力装置や補助記憶装置の接続方式</li>
+                <li class="list-group-item"><strong>アドレス</strong>：主記憶装置内のデータの格納場所を示す番号</li>
+            </ul>
+
+            <h3>メモリの種類</h3>
+            <div class="note">
+                <h4>RAM（Random Access Memory）</h4>
+                <ul>
+                    <li>書き込み可能、一時的保存</li>
+                    <li>電源が切れるとデータは消える</li>
+                </ul>
+            </div>
+            <div class="note">
+                <h4>ROM（Read Only Memory）</h4>
+                <ul>
+                    <li>読み込み専用</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="data-units">
+            <h2>データ単位</h2>
+            <ul class="list-group">
+                <li class="list-group-item">8 bit = 1 byte</li>
+                <li class="list-group-item">1 bit = 0.125 byte</li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="boot-process">
+            <h2>パソコンが動く仕組み</h2>
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item">スイッチON</li>
+                <li class="list-group-item">各パーツに電流が流れる</li>
+                <li class="list-group-item"><strong>クロックジェネレータ</strong>から<strong>クロック周波数</strong>が発生</li>
+                <li class="list-group-item"><strong>CPU</strong>が動き出す</li>
+                <li class="list-group-item">CPUが<strong>BIOS</strong>から起動プログラムを読み込む</li>
+                <li class="list-group-item">CPUの初期化</li>
+                <li class="list-group-item">各パーツの異常チェック
+                    <ul>
+                        <li>異常があればビープ音で起動中断</li>
+                    </ul>
+                </li>
+                <li class="list-group-item">CPUが<strong>OS</strong>起動プログラムをHDDに探しに行く</li>
+                <li class="list-group-item"><strong>IPL（Initial Program Loader / ブートストラップローダー）</strong>がWindowsを読み込む</li>
+                <li class="list-group-item">システムファイルが起動</li>
+                <li class="list-group-item"><strong>中核的なファイルを周辺的なファイルに分ける</strong></li>
+                <li class="list-group-item"><strong>中核ファイルがWindowsカーネル（ロゴ画面）を表示して起動完了</strong></li>
+            </ol>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="basic-structure">
+            <h2>コンピュータの基本構造</h2>
+            <p>コンピュータは、<strong>CPU（MPU）</strong>、<strong>メモリ</strong>、<strong>I/O（入力出力装置）</strong> から構成される</p>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="registers">
+            <h2>レジスタ（記憶装置）</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>汎用レジスタ</strong>：演算に使用</li>
+                <li class="list-group-item"><strong>プログラムレジスタ</strong>：実行中のアドレスを保持</li>
+                <li class="list-group-item"><strong>ステータスレジスタ</strong>：実行結果の状態を保持</li>
+                <li class="list-group-item"><strong>スタックポインタ</strong>：スタックメモリの使用位置を保持</li>
+            </ul>
+
+            <h3>キャッシュメモリ</h3>
+            <ul class="list-group">
+                <li class="list-group-item">小容量・高速の記憶装置</li>
+                <li class="list-group-item">演算結果や次の命令を一時的に保存</li>
+                <li class="list-group-item"><strong>SRAM（Static RAM）</strong> により構成され、高速</li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="cpu-operation">
+            <h2>CPU動作の流れ</h2>
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item">命令の読み込み</li>
+                <li class="list-group-item">命令の解釈（デコード）</li>
+                <li class="list-group-item">命令の発行 → 実行</li>
+                <li class="list-group-item">ステート（状態）の変化</li>
+                <li class="list-group-item">次の命令へ（1に戻る）</li>
+            </ol>
+        </section>
+
+        <footer class="mt-5 pt-3 text-muted text-center">
+            <p>ハードウェアとコンピュータの仕組み <a href="https://github.com/nezumi0627">nezumi0627</a></p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

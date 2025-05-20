@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電子回路まとめ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 2rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+        h3 {
+            color: #3498db;
+            margin-top: 1.5rem;
+        }
+        .formula {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+            overflow-x: auto;
+        }
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #5bc0de;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .highlight {
+            background-color: #fffde7;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .term {
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: underline;
+            text-decoration-color: #3498db;
+            text-underline-offset: 4px;
+        }
+        .divider {
+            height: 2px;
+            background-color: #e0e0e0;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>電子回路まとめ</h1>
+        
+        <section id="fet-terminals">
+            <h2>FETの端子</h2>
+            <p><strong>電界効果トランジスタ（FET）</strong> には以下の3つの端子があります：</p>
+            <ul>
+                <li><strong>ゲート（G）</strong></li>
+                <li><strong>ソース（S）</strong></li>
+                <li><strong>ドレイン（D）</strong></li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="fet-types">
+            <h2>FETの種類</h2>
+            
+            <h3>接合型FET（JFET）</h3>
+            <ul>
+                <li>デプレッション形
+                    <ul>
+                        <li>pチャネル</li>
+                        <li>nチャネル</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>MOS FET（電界効果型トランジスタ）</h3>
+            <ul>
+                <li>デプレッション形
+                    <ul>
+                        <li>pチャネル</li>
+                        <li>nチャネル</li>
+                    </ul>
+                </li>
+                <li>エンハンスメント形
+                    <ul>
+                        <li>pチャネル</li>
+                        <li>nチャネル</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+
+        <div class="divider"></div>
+
+        <section id="photo-transistor">
+            <h2>フォトトランジスタ</h2>
+            <p>フォトトランジスタは、トランジスタと同様に <strong>p形・n形による3層構造</strong> を持つ素子です。<br>
+            <strong>受光センサ</strong>として使われることが多く、<strong>ベースの接合部に光を当てるとコレクタ電流が流れる</strong>という性質があります。</p>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="semiconductor-features">
+            <h2>半導体の特徴</h2>
+            <p>半導体は、<strong>導体（電気を通す）</strong> と <strong>絶縁体（電気を通さない）</strong> の <strong>中間的な性質</strong> を持つ物質です。</p>
+            
+            <p><strong>特徴：</strong></p>
+            <ul>
+                <li><strong>電気の流れを制御できる</strong></li>
+                <li><strong>温度によって電気抵抗が変化</strong></li>
+                <li><strong>光や熱などの外部エネルギーで電気的に活性化される</strong></li>
+            </ul>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="turn-on-off">
+            <h2>ターンオン・ターンオフ</h2>
+            
+            <div class="note">
+                <h4>ターンオン（Turn On）</h4>
+                <p>アノード・カソード間に <strong>電流が流れる</strong> 状態にする動作。</p>
+            </div>
+
+            <div class="note">
+                <h4>ターンオフ（Turn Off）</h4>
+                <p>アノード・カソード間に <strong>電圧が加わらない</strong> ようにして電流を止める動作。</p>
+            </div>
+        </section>
+        <footer class="mt-5 pt-3 text-muted text-center">
+            <p>生産技術の基礎まとめ <a href="https://github.com/nezumi0627">nezumi0627</a></p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
